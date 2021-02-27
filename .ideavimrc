@@ -1,0 +1,20 @@
+let mapleader = " "
+
+" Plugins
+set NERDTree
+set exchange
+set highlightedyank
+set easymotion
+set ideajoin
+
+" Settings
+set relativenumber
+
+" Quickly edit/reload this configuration file
+nnoremap gev :e c:\users\admin\.ideavimrc<CR>
+nnoremap gsv :so c:\users\admin\.ideavimrc<CR>
+
+
+map <leader>n :NERDTreeToggle<CR>
+
+nnoremap <leader>ff :action GotoFile<CR>
