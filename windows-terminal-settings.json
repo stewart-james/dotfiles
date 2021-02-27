@@ -4,6 +4,8 @@
     "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
     "copyOnSelect": false,
     "copyFormatting": false,
+    "launchMode": "maximized",
+    "startupActions": "sp -H -s .3; sp -V -s .33; move-focus left; sp -V -s .5",
 
     "profiles":
     {
@@ -30,7 +32,7 @@
                 "guid": "{a2064f59-8f02-47c5-b1b5-8d41e88b77f5}",
                 "name": "vim",
                 "commandline": "vim.exe",
-		"icon": "%HOMEDRIVE%%HOMEPATH%\\tools\\vim\\vim82\\vim16x16.png",
+		        "icon": "%HOMEDRIVE%%HOMEPATH%\\tools\\vim\\vim82\\vim16x16.png",
                 "hidden": false
             },
             {
