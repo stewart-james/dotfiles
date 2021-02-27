@@ -1,0 +1,78 @@
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "copyOnSelect": false,
+    "copyFormatting": false,
+
+    "profiles":
+    {
+        "defaults":
+        {
+          "colorScheme": "Gruvbox Dark",
+          "fontFace": "Cascadia Code"
+        },
+        "list":
+        [
+            {
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "name": "Windows PowerShell",
+                "commandline": "powershell.exe",
+                "hidden": false
+            },
+            {
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "name": "Command Prompt",
+                "commandline": "cmd.exe",
+                "hidden": false
+            },
+            {
+                "guid": "{a2064f59-8f02-47c5-b1b5-8d41e88b77f5}",
+                "name": "vim",
+                "commandline": "vim.exe",
+		"icon": "%HOMEDRIVE%%HOMEPATH%\\tools\\vim\\vim82\\vim16x16.png",
+                "hidden": false
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": false,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            }
+        ]
+    },
+
+    "schemes": [
+      {
+        "name": "Gruvbox Dark",
+        "black": "#1D2021",
+        "red": "#be0f17",
+        "green": "#868715",
+        "yellow": "#cc881a",
+        "blue": "#377375",
+        "purple": "#a04b73",
+        "cyan": "#578e57",
+        "white": "#978771",
+        "brightBlack": "#7f7061",
+        "brightRed": "#f73028",
+        "brightGreen": "#aab01e",
+        "brightYellow": "#f7b125",
+        "brightBlue": "#719586",
+        "brightPurple": "#c77089",
+        "brightCyan": "#7db669",
+        "brightWhite": "#e6d4a3",
+        "background": "#1D2021",
+        "foreground": "#e6d4a3"
+      }
+    ],
+
+    "actions":
+    [
+        { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
+        { "command": "paste", "keys": "ctrl+v" },
+
+        { "command": "find", "keys": "ctrl+shift+f" },
+
+        { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" }
+    ]
+}
