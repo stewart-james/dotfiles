@@ -5,7 +5,7 @@
     "copyOnSelect": false,
     "copyFormatting": false,
     "launchMode": "maximized",
-    "startupActions": "sp -H -s .3; sp -V -s .33; move-focus left; sp -V -s .5",
+    "startupActions": "cmd.exe ; sp -H -s .3; sp -V -s .33; move-focus left; sp -V -s .5",
 
     "profiles":
     {
@@ -90,6 +90,10 @@
         { "command": { "action": "resizePane", "direction": "up" }, "keys": "alt+up" },
 
         { "command": { "action": "splitPane", "split": "horizontal" }, "keys": "alt+s" },
-        { "command": { "action": "splitPane", "split": "vertical" }, "keys": "alt+v" }
+        { "command": { "action": "splitPane", "split": "vertical" }, "keys": "alt+v" },
+
+	{ "command": { "action": "moveFocus", "direction": "previous"}, "keys": "alt+q"},
+
+        { "command": "togglePaneZoom", "keys": "alt+z" }
     ]
 }
