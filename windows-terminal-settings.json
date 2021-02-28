@@ -71,7 +71,6 @@
     "actions":
     [
         { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
-        { "command": "paste", "keys": "ctrl+v" },
 
         { "command": "find", "keys": "ctrl+shift+f" },
 
@@ -92,8 +91,10 @@
         { "command": { "action": "splitPane", "split": "horizontal" }, "keys": "alt+s" },
         { "command": { "action": "splitPane", "split": "vertical" }, "keys": "alt+v" },
 
-	{ "command": { "action": "moveFocus", "direction": "previous"}, "keys": "alt+q"},
+		{ "command": { "action": "moveFocus", "direction": "previous"}, "keys": "alt+q"},
 
-        { "command": "togglePaneZoom", "keys": "alt+z" }
+        { "command": "togglePaneZoom", "keys": "alt+z" },
+		{ "command": { "action": "resizePane", "direction": "up"}, "keys": "alt+="},
+		{ "command": { "action": "resizePane", "direction": "down"}, "keys": "alt+-"}
     ]
 }
