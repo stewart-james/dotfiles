@@ -1,0 +1,236 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  resources:
+
+    - resource: Microsoft.Windows.Developer/DeveloperMode
+      directives:
+        description: Enable Developer Mode
+        allowPrerelease: true
+      settings:
+        Ensure: Present
+
+    - resource: Script
+      id: create-apps-config
+      directives:
+        description: Create apps directory
+      settings:
+        getScript: "% 'no-op'"
+        setScript: 
+          if (-not (Test-Path -Path "c:\projects\apps\config")) { New-Item -Path "c:\projects\apps\config" -ItemType Directory }
+          if (-not (Test-Path -Path "c:\projects\apps\data")) { New-Item -Path "c:\projects\apps\data" -ItemType Directory }
+          if (-not (Test-Path -Path "c:\projects\apps\state")) { New-Item -Path "c:\projects\apps\state" -ItemType Directory }
+          if (-not (Test-Path -Path "c:\projects\tools")) { New-Item -Path "c:\projects\tools" -ItemType Directory }
+          if (-not (Test-Path -Path "c:\projects\repos")) { New-Item -Path "c:\projects\repos" -ItemType Directory }
+        testScript: (Test-Path -Path "c:\projects\apps\config") -And (Test-Path -Path "c:\projects\apps\data") -And (Test-Path -Path "c:\projects\apps\state") -And (Test-Path -Path "c:\projects\tools") -And (Test-Path -Path "c:\projects\repos")
+
+    - resource: Environment
+      id: xdg-config-home-envar
+      directives:
+        module: PSDscResources
+        description: Set XDG_CONFIG_HOME
+      settings:
+        Name: 'XDG_CONFIG_HOME'
+        Value: 'C:\projects\apps\config'
+        Ensure: Present
+        Target: Machine
+        Path: false
+
+    - resource: Environment
+      id: xdg-data-home-envar
+      directives:
+        module: PSDscResources
+        description: Set XDG_DATA_HOME
+      settings:
+        Name: 'XDG_DATA_HOME'
+        Value: 'C:\projects\apps\data'
+        Ensure: Present
+        Target: Machine
+        Path: false
+
+    - resource: Environment
+      id: xdg-state-home-envar 
+      directives:
+        module: PSDscResources
+        description: Set XDG_STATE_HOME
+      settings:
+        Name: 'XDG_STATE_HOME'
+        Value: 'C:\projects\apps\state'
+        Ensure: Present
+        Target: Machine
+        Path: false
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: Microsoft.WindowsTerminal
+      directives:
+        description: Install Windows Terminal
+        allowPrerelease: false
+      settings:
+        id: Microsoft.WindowsTerminal
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Git
+        allowPrerelease: true
+      settings:
+        id: Git.Git
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Glazewm
+        allowPrerelease: false
+      settings:
+        id: glzr-io.glazewm
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: Nushell.Nushell
+      directives:
+        description: Install Nushell
+        allowPrerelease: false
+      settings:
+        id: Nushell.Nushell
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: Microsoft.Sysinternals
+      directives:
+        description: Install Sysinternals
+        allowPrerelease: false
+      settings:
+        id: Microsoft.Sysinternals
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: install-rider
+      directives:
+        description: Install JetBrains Rider
+        allowPrerelease: false
+      settings:
+        id: JetBrains.Rider
+        source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: install-clion
+      directives:
+        description: Install JetBrains CLion
+        allowPrerelease: false
+      settings:
+        id: JetBrains.CLion
+        source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: install-vs-code
+      directives:
+        description: Install Microsoft Visual Studio Code
+        allowPrerelease: true
+      settings:
+        id: Microsoft.VisualStudioCode
+        source: winget
+        Ensure: Present
+
+    - resource: vscode/VSCodeExtension
+      dependsOn:
+        - install-vs-code
+      directives:
+        description: Install EditorConfig extension for VSCode
+        allowPrerelease: true
+      settings:
+        Name: EditorConfig.EditorConfig
+        Ensure: Present
+
+    - resource: vscode/VSCodeExtension
+      dependsOn:
+        - install-vs-code
+      directives:
+        description: Install Vim extension for VSCode
+        allowPrerelease: true
+      settings:
+        Name: vscodevim.vim
+        Ensure: Present
+
+    - resource: vscode/VSCodeExtension
+      dependsOn:
+        - install-vs-code
+      directives:
+        description: Install csharpier extension for VSCode
+        allowPrerelease: true
+      settings:
+        Name: csharpier.csharpier-vscode
+        Ensure: Present
+
+    - resource: vscode/VSCodeExtension
+      dependsOn:
+        - install-vs-code
+      directives:
+        description: Install xml extension for VSCode
+        allowPrerelease: true
+      settings:
+        Name: redhat.vscode-xml
+        Ensure: Present
+
+    - resource: vscode/VSCodeExtension
+      dependsOn:
+        - install-vs-code
+      directives:
+        description: Install Rainbow CSV extension for VSCode
+        allowPrerelease: true
+      settings:
+        Name: mechatroner.rainbow-csv
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: vsPackage
+      directives:
+        description: Install Visual Studio 2022 Professional
+        allowPrerelease: true
+      settings:
+        id: Microsoft.VisualStudio.2022.Professional
+        source: winget
+
+    - resource: Microsoft.VisualStudio.DSC/VSComponents
+      dependsOn:
+        - vsPackage
+      directives:
+        description: Install required VS workloads from vsconfig file
+        allowPrerelease: true
+      settings:
+        productId: Microsoft.VisualStudio.Product.Professional
+        channelId: VisualStudio.17.Release
+        vsConfigFile: '${WinGetConfigRoot}\.vsconfig'
+        includeRecommended: true
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: install-hexyl
+      directives:
+        description: Install Hexyl
+        allowPrerelease: false
+      settings:
+        id: sharkdp.hexyl
+        source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: install-neovim
+      directives:
+        description: Install Neovim
+        allowPrerelease: false
+      settings:
+        id: Neovim.Neovim
+        source: winget
+        Ensure: Present
+
+    - resource: GitDsc/GitClone
+      dependsOn:
+        - create-apps-config
+      directives:
+        description: Clone my Neovim configuration
+        allowPrerelease: true
+      settings:
+        HttpsUrl: https://github.com/stewart-james/nvim.git
+        RootDirectory: 'c:/projects/apps/config/'
+
+  configurationVersion: 0.2.0
